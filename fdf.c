@@ -6,7 +6,7 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 13:04:00 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/12 19:21:24 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/13 17:03:07 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,44 @@ typedef struct			s_program
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
+	int			x;
+	int			y;
+	int			color;
+	int			mx;
+	int			my;
 
 }						t_program;
 
-int			deal_key(int key, void *param)
+int			deal_mouse(int lol, int x, int y,  t_program *p)
 {
-	static int		x = 250;
-	static int		y = 250;
+	p->mx = x;
+	p->my = y;
+	mlx_pixel_put(p->mlx_ptr, p->win_ptr, p->mx, p->my, p->color++);
+	return(0);
 
-	mlx_pixel_put(program->mlx_ptr, program->win_ptr, 300, 250, 0xFFFFFF);
-	ft_putchar('x');
+}
+
+int			deal_key(int keycode, t_program *p)
+{
+
+	mlx_pixel_put(p->mlx_ptr, p->win_ptr, p->x++, p->y++, p->color++);
+	ft_putnbr(p->x);
+	ft_putchar('\n');
 	return(0);
 }
 
 int		main()
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
+	t_program	program;
+	program.x = 250;
+	program.y = 300;
+	program.color = 0x808080;
 
-	mlx_ptr = mlx_init();
-	win_ptr = mlx_new_window(mlx_ptr, 500, 500, "Dope!");
-	mlx_pixel_put(program->mlx_ptr, program->win_ptr, 300, 250, 0xFFFFFF);
-	mlx_key_hook(win_ptr, deal_key, (void *)0);
-	mlx_loop(mlx_ptr);
+	program.mlx_ptr = mlx_init();
+	program.win_ptr = mlx_new_window(program.mlx_ptr, 500, 500, "Dope!");
+//	mlx_pixel_put(program.mlx_ptr, program.win_ptr, 300, 250, 0xFFFFFF);
+	mlx_key_hook(program.win_ptr, deal_key, &program);
+	mlx_mouse_hook(program.win_ptr, deal_mouse, &program);
+	mlx_loop(program.mlx_ptr);
 }
 
