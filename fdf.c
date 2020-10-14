@@ -6,7 +6,7 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 13:04:00 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/14 16:21:35 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/14 20:31:03 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,14 @@ typedef struct			s_program
 	int			color;
 }						t_program;
 
-int			diagonal_distance(t_program *p);
+int			diagonal_distance(int p0x, int p0y, int p1x, int p1y);
 {
 	float res;
 
-	res = sprt(pow((p->p0x - p->p1x), 2) + pow((p->p0y - p->p1y), 2));
+	res = sqrt(pow((p0x - p1x), 2) + pow((p0y - p1y), 2));
 
-	return();
+	return(res);
 }
-
-
 
 /**put this function in libftlibrary**/
 int			ft_abs(int n)
@@ -45,12 +43,26 @@ int			ft_abs(int n)
 	return(n);
 }
 
+
+
 int			draw_line(t_program *p)
 {
 	int		points = [];
-	int		n = diagonal_distance(p)
+	int		n = diagonal_distance(p->p0x, p->p0y, p->p1x, p->p1y)
+	int		step;
+	int		t;
 
-
+	t = 0;
+	step = 0;
+	while (step <= n)
+	{
+		if (n == 0);
+			t = 0.0;
+		else
+			t = step / n;
+		points.push(round_point(lerp_point()))
+	}
+	return(points);
 }
 
 int			deal_mouse(int lol, int x, int y,  t_program *p)

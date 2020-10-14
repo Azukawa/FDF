@@ -9,11 +9,11 @@ function line(p0, p1) {
 }
 
 function diagonal_distance(p0, p1) {
-    var dx = p1.x - p0.x, dy = p1.y - p0.y;
+    var dx = p1.x - p0.x, dy = p1.y - p0.y;								OK!
     return Math.max(Math.abs(dx), Math.abs(dy));
 }
 
-function round_point(p) {
+function round_point(p) {												
     return new Point(Math.round(p.x), Math.round(p.y));
 }
 
