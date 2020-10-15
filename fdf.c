@@ -6,7 +6,7 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 13:04:00 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/15 15:56:00 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/15 18:27:14 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,39 +77,35 @@ void			draw_line(t_program *p)
 	t = 0;
 	step = 0;
 	while (step <= n)
-	{	ft_putchar('i');
+	{
 		if (n == 0)
 			t = 0.0;
 		else
 			t = step / n;
 		ret0 = lerp_2d(p->start, p->end, t);
 		round_point(&ret0.x, &ret0.y);
-		mlx_pixel_put(p->mlx_ptr, p->win_ptr, ret0.x, ret0.y, p->color);
+		mlx_pixel_put(p->mlx_ptr, p->win_ptr, ret0.x, ret0.y, p->color++);
 		step++;
 	}
-	p->start = p->end;
 }
 
 int			mouse_callback(int button, int x, int y,  t_program *p)
 {
-
-	mlx_pixel_put(p->mlx_ptr, p->win_ptr, x, y, p->color++);
-	p->start.x = 1;
-	p->start.y = 1;
-	p->end.x = 499;
-	p->end.y = 499;
+	p->end.x = x;
+	p->end.y = y;
 	draw_line(p);
+	p->start.x = x;
+	p->start.y = y;
 	return(0);
-
 }
 
-//int			key_callback(int keycode, t_program *p)
-//{
-//
-//	mlx_pixel_put(p->mlx_ptr, p->win_ptr, p->start.x++, p->start.y++, p->color++);
-//	ft_putchar('\n');
-//	return(0);
-//}
+int			key_callback(int keycode, t_program *p)
+{
+
+	mlx_pixel_put(p->mlx_ptr, p->win_ptr, p->start.x++, p->start.y++, p->color++);
+	ft_putchar('\n');
+	return(0);
+}
 
 int		main()
 {
@@ -117,12 +113,12 @@ int		main()
 
 	program.start.x = 250;
 	program.start.y = 300;
-	program.color = 0x808080;
+	program.color = 0x000000;
 
 	program.mlx_ptr = mlx_init();
 	program.win_ptr = mlx_new_window(program.mlx_ptr, 500, 500, "Dope!");
 //	mlx_pixel_put(program.mlx_ptr, program.win_ptr, 300, 250, 0xFFFFFF);
-//	mlx_key_hook(program.win_ptr, key_callback, &program);
+	mlx_key_hook(program.win_ptr, key_callback, &program);
 	mlx_mouse_hook(program.win_ptr, mouse_callback, &program);
 	mlx_loop(program.mlx_ptr);
 }
