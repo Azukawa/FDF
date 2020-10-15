@@ -14,14 +14,14 @@ function diagonal_distance(p0, p1) {
 }
 
 function round_point(p) {												
-    return new Point(Math.round(p.x), Math.round(p.y));
+    return new Point(Math.round(p.x), Math.round(p.y));					OK!
 }
 
 function lerp_point(p0, p1, t) {
-    return new Point(lerp(p0.x, p1.x, t),
+    return new Point(lerp(p0.x, p1.x, t),								OK!
                      lerp(p0.y, p1.y, t));
 }
 
-function lerp(start, end, t) {
+function lerp(start, end, t) {											OK!
     return start + t * (end-start);
 }

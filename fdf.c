@@ -6,7 +6,7 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 13:04:00 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/14 20:31:03 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/15 15:56:00 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,22 @@
 #include "../_libft/libft.h"
 #include <math.h>
 
+typedef struct			s_point_2d
+{
+	float 	x;
+	float	y;
+}						t_point_2d;
+
 typedef struct			s_program
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
-	int			p0x;
-	int			p0y;
-	int			p1x;
-	int			p1y;
-
+	t_point_2d	start;
+	t_point_2d	end;
 	int			color;
 }						t_program;
 
-int			diagonal_distance(int p0x, int p0y, int p1x, int p1y);
+int			diagonal_distance(int p0x, int p0y, int p1x, int p1y)
 {
 	float res;
 
@@ -43,59 +46,84 @@ int			ft_abs(int n)
 	return(n);
 }
 
-
-
-int			draw_line(t_program *p)
+float			lerp_1d(float start, float end,  float t)
 {
-	int		points = [];
-	int		n = diagonal_distance(p->p0x, p->p0y, p->p1x, p->p1y)
-	int		step;
-	int		t;
+	return(start + t * (end - start));
+}
+
+t_point_2d			lerp_2d(t_point_2d start, t_point_2d end, float t)
+{
+	t_point_2d ret;
+	
+	ret.x = lerp_1d(start.x, end.x, t);
+	ret.y = lerp_1d(start.y, end.y, t);
+	
+	return(ret);
+}
+
+void			round_point(float *x, float *y)
+{
+	*x = round(*x);
+	*y = round(*y);
+}
+
+void			draw_line(t_program *p)
+{
+	float		n = diagonal_distance(p->start.x, p->start.y, p->end.x, p->end.y);
+	float		step;
+	float		t;
+	t_point_2d	ret0;
 
 	t = 0;
 	step = 0;
 	while (step <= n)
-	{
-		if (n == 0);
+	{	ft_putchar('i');
+		if (n == 0)
 			t = 0.0;
 		else
 			t = step / n;
-		points.push(round_point(lerp_point()))
+		ret0 = lerp_2d(p->start, p->end, t);
+		round_point(&ret0.x, &ret0.y);
+		mlx_pixel_put(p->mlx_ptr, p->win_ptr, ret0.x, ret0.y, p->color);
+		step++;
 	}
-	return(points);
+	p->start = p->end;
 }
 
-int			deal_mouse(int lol, int x, int y,  t_program *p)
+int			mouse_callback(int button, int x, int y,  t_program *p)
 {
 
 	mlx_pixel_put(p->mlx_ptr, p->win_ptr, x, y, p->color++);
-	p->mx = x;
-	p->my = y;
+	p->start.x = 1;
+	p->start.y = 1;
+	p->end.x = 499;
+	p->end.y = 499;
+	draw_line(p);
 	return(0);
 
 }
 
-int			deal_key(int keycode, t_program *p)
-{
-
-	mlx_pixel_put(p->mlx_ptr, p->win_ptr, p->x++, p->y++, p->color++);
-	ft_putnbr(p->x);
-	ft_putchar('\n');
-	return(0);
-}
+//int			key_callback(int keycode, t_program *p)
+//{
+//
+//	mlx_pixel_put(p->mlx_ptr, p->win_ptr, p->start.x++, p->start.y++, p->color++);
+//	ft_putchar('\n');
+//	return(0);
+//}
 
 int		main()
 {
 	t_program	program;
-	program.x = 250;
-	program.y = 300;
+
+	program.start.x = 250;
+	program.start.y = 300;
 	program.color = 0x808080;
 
 	program.mlx_ptr = mlx_init();
 	program.win_ptr = mlx_new_window(program.mlx_ptr, 500, 500, "Dope!");
 //	mlx_pixel_put(program.mlx_ptr, program.win_ptr, 300, 250, 0xFFFFFF);
-	mlx_key_hook(program.win_ptr, deal_key, &program);
-	mlx_mouse_hook(program.win_ptr, deal_mouse, &program);
+//	mlx_key_hook(program.win_ptr, key_callback, &program);
+	mlx_mouse_hook(program.win_ptr, mouse_callback, &program);
 	mlx_loop(program.mlx_ptr);
 }
 
