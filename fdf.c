@@ -6,13 +6,16 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 13:04:00 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/15 18:27:14 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/16 19:15:17 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx.h"
-#include "../_libft/libft.h"
+#include "_libft/libft.h"
 #include <math.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <fcntl.h>
 
 typedef struct			s_point_2d
 {
@@ -36,14 +39,6 @@ int			diagonal_distance(int p0x, int p0y, int p1x, int p1y)
 	res = sqrt(pow((p0x - p1x), 2) + pow((p0y - p1y), 2));
 
 	return(res);
-}
-
-/**put this function in libftlibrary**/
-int			ft_abs(int n)
-{
-	if(n < 0)
-		n = n * -1;
-	return(n);
 }
 
 float			lerp_1d(float start, float end,  float t)
@@ -107,19 +102,38 @@ int			key_callback(int keycode, t_program *p)
 	return(0);
 }
 
-int		main()
+int			read_file(char *str)
+{
+	int		fd;
+	int		ret;
+	char	*output;
+	output = NULL;
+
+	open(str, O_RDONLY);
+	while((ret = get_next_line(fd, &output)) > 0)
+	{
+		printf("%s \n", output);
+		free(output);
+	}
+	return(0);
+}
+
+
+int		main(int argc, char **argv)
 {
 	t_program	program;
 
 	program.start.x = 250;
 	program.start.y = 300;
-	program.color = 0x000000;
+	program.color = 0x000000;	
 
-	program.mlx_ptr = mlx_init();
-	program.win_ptr = mlx_new_window(program.mlx_ptr, 500, 500, "Dope!");
-//	mlx_pixel_put(program.mlx_ptr, program.win_ptr, 300, 250, 0xFFFFFF);
-	mlx_key_hook(program.win_ptr, key_callback, &program);
-	mlx_mouse_hook(program.win_ptr, mouse_callback, &program);
-	mlx_loop(program.mlx_ptr);
+	read_file(argv[1]);
+
+//	program.mlx_ptr = mlx_init();
+//	program.win_ptr = mlx_new_window(program.mlx_ptr, 500, 500, "Dope!");
+//	mlx_key_hook(program.win_ptr, key_callback, &program);
+//	mlx_mouse_hook(program.win_ptr, mouse_callback, &program);
+//	mlx_loop(program.mlx_ptr);
+
 }
 
