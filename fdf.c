@@ -6,7 +6,7 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 13:04:00 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/16 19:15:17 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/17 18:12:00 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,18 +102,69 @@ int			key_callback(int keycode, t_program *p)
 	return(0);
 }
 
+void			ft_putintarr(int *arr, int x)
+{
+	int		i;
+	i	=	0;
+	while(i < x)
+	{
+		ft_putnbr(arr[i++]);
+		ft_putchar(' ');
+	}
+}
+
+//int			symbols_in_line()
+//{
+//
+//}
+
+int			line_to_grid(char *line)
+{
+	int i;
+	int j;
+	int a;
+	char buf[4];
+	int	ret[50];
+	i = 0;
+	j = 0;
+	a = 0;
+	while (line[i] != '\0')
+	{
+		if(line[i] != ' ')
+			buf[j++] = line[i++];
+		else
+		{
+			buf[j] = '\0';
+			ret[a] = atoi(buf);
+			a++;
+			i++;
+			j = 0;
+			ft_bzero(buf, 4);
+		}
+	}
+	ft_putintarr(ret, a);	
+	return(0);
+}
+
 int			read_file(char *str)
 {
 	int		fd;
 	int		ret;
 	char	*output;
+	int		i;
+	int		**grid;
+
+	i = 0;
 	output = NULL;
 
-	open(str, O_RDONLY);
+	fd = open(str, O_RDONLY);
 	while((ret = get_next_line(fd, &output)) > 0)
 	{
-		printf("%s \n", output);
+		line_to_grid(output);
 		free(output);
+		ft_putchar('Y');
+		ft_putchar('\n');
+		i++;
 	}
 	return(0);
 }
@@ -122,6 +173,7 @@ int			read_file(char *str)
 int		main(int argc, char **argv)
 {
 	t_program	program;
+	int			grid[1000][1000];
 
 	program.start.x = 250;
 	program.start.y = 300;
