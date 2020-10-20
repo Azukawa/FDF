@@ -6,7 +6,7 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 13:04:00 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/20 17:16:26 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/20 16:18:45 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int			diagonal_distance(int p0x, int p0y, int p1x, int p1y)
 	float res;
 
 	res = sqrt(pow((p0x - p1x), 2) + pow((p0y - p1y), 2));
+
 	return(res);
 }
 
@@ -302,10 +303,12 @@ void	draw_sec(t_program *p)
 	{
 		while (i < p->gridx)
 		{
+	//		mlx_pixel_put(p->mlx_ptr, p->win_ptr, x, y, 0xFFFFFF);
 			if(j > 0)
 				draw_up_sec(p, i, j, x, y);
 			draw_left_sec(p, i, j, x, y);
 			x = x + p->unit;
+	//		y = y + (p->unit / 2);
 			i++;
 		}
 		y = (origin - 150) + ((j + 1) * (p->unit / 2));
@@ -365,6 +368,7 @@ int		main(int argc, char **argv)
 	program.win_ptr = mlx_new_window(program.mlx_ptr, program.resox, program.resoy, "Dope!");
 
 	draw_isom(&program);
+//	draw_sec(&program);
 	mlx_key_hook(program.win_ptr, key_callback, &program);
 	mlx_mouse_hook(program.win_ptr, mouse_callback, &program);
 	mlx_loop(program.mlx_ptr);
