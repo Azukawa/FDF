@@ -6,7 +6,7 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 13:04:00 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/19 21:03:55 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/20 12:50:33 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ typedef struct			s_program
 	int			**grid;
 	int			gridx;
 	int			gridy;
+	int			unit;
+	int			h_amp;
 }						t_program;
 
 int			diagonal_distance(int p0x, int p0y, int p1x, int p1y)
@@ -116,11 +118,6 @@ void			ft_putintarr(int *arr, int x)
 	}
 }
 
-//int			symbols_in_line()
-//{
-//
-//}
-
 int			*line_to_grid(char *line, int *grid, int *line_len)
 {
 	int i;
@@ -135,8 +132,9 @@ int			*line_to_grid(char *line, int *grid, int *line_len)
 	{
 		if(line[i] != ' ')
 			buf[j++] = line[i++];
-		else
+		else if(line[i - 1] != ' ')
 		{
+
 			buf[j] = '\0';
 			grid[a] = ft_atoi(buf);
 			a++;
@@ -144,6 +142,8 @@ int			*line_to_grid(char *line, int *grid, int *line_len)
 			j = 0;
 			ft_bzero(buf, 50);
 		}
+		else
+			i++;
 	}
 	buf[j] = '\0';
     grid[a] = ft_atoi(buf);
@@ -168,9 +168,9 @@ int			read_file(char *str, t_program *p)
 	{
 		line_to_grid(output, p->grid[i], &p->gridx);
 		free(output);
-//		ft_putintarr(p->grid[i], p->line_len);
-//		ft_putchar('Y');
-//		ft_putchar('\n');
+		ft_putintarr(p->grid[i], p->gridx);
+		ft_putchar('Y');
+		ft_putchar('\n');
 		i++;
 	}
 	p->gridy = i;
@@ -192,13 +192,11 @@ int		**init_grid()
 void	draw_left(t_program *p, int i, int j, int x, int y)
 {
 		p->end.x = x;		/*This block draws horizontal*/
-		p->end.y = y - (p->grid[j][i] * 5);
+		p->end.y = y - (p->grid[j][i] * p->h_amp);
 		if(i > 0)
 			draw_line(p);
 		p->start.x = p->end.x;
 		p->start.y = p->end.y;
-	
-
 }
 
 void	draw_up(t_program *p, int i, int j, int x, int y)
@@ -213,18 +211,15 @@ void	draw_up(t_program *p, int i, int j, int x, int y)
 		temp_endx = p->end.x;
 		temp_endy = p->end.y;
 		
-		p->end.x = x + 30;
-		p->end.y = (y - 15) - (p->grid[j - 1][i] * 5);
+		p->end.x = x + p->unit;
+		p->end.y = (y - (p->unit / 2)) - (p->grid[j - 1][i] * p->h_amp);
 		p->start.x = x;
-		p->start.y = y - (p->grid[j][i] * 5);
-			draw_line(p);
-
-		
+		p->start.y = y - (p->grid[j][i] * p->h_amp);
+		draw_line(p);
 		p->start.x = temp_startx;
 		p->start.y = temp_starty;
 		p->end.x = temp_endx;
-		p->end.y = temp_endx;	
-	
+		p->end.y = temp_endx;		
 }
 
 void	draw_grid(t_program *p)
@@ -234,9 +229,7 @@ void	draw_grid(t_program *p)
 	int		x;
 	int		y;
 	int		origin;
-	int		unit;
 	
-	unit = 30;
 	origin = 200;
 	x = origin;
 	y = origin - 150;
@@ -248,25 +241,19 @@ void	draw_grid(t_program *p)
 		while (i < p->gridx)
 		{
 			mlx_pixel_put(p->mlx_ptr, p->win_ptr, x, y, 0xFFFFFF);
-		//	mlx_pixel_put(p->mlx_ptr, p->win_ptr, x, y + p->grid[j][i], p->color);
-			
-			if(j > 1)	
+			if(j > 0)	
 				draw_up(p, i, j, x, y);
-
+	
 			draw_left(p, i, j, x, y);
-
-
-
-			x = x + unit;
-			y = y + (unit / 2);
+			x = x + p->unit;
+			y = y + (p->unit / 2);
 			i++;
 		}
-		y = (origin - 150) + (j * (unit / 2));
-		x = origin - (j * unit);
+		y = (origin - 150) + ((j + 1) * (p->unit / 2));
+		x = origin - ((j + 1) * p->unit);
 		i = 0;
 		j++;
 	}
-	ft_putstr("xxx");
 }
 
 int		main(int argc, char **argv)
@@ -274,6 +261,8 @@ int		main(int argc, char **argv)
 	t_program	program;
 	program.grid = init_grid();
 
+	program.unit = 30; // original value is 30
+	program.h_amp = program.unit / 6; //origial value is (unit / 6)
 	program.start.x = 250;
 	program.start.y = 300;
 	program.color = 0xffa500;	
@@ -284,7 +273,7 @@ int		main(int argc, char **argv)
 	program.win_ptr = mlx_new_window(program.mlx_ptr, 1000, 700, "Dope!");
 
 	draw_grid(&program);
-//	mlx_key_hook(program.win_ptr, key_callback, &program);
+	mlx_key_hook(program.win_ptr, key_callback, &program);
 	mlx_mouse_hook(program.win_ptr, mouse_callback, &program);
 	mlx_loop(program.mlx_ptr);
 
