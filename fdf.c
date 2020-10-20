@@ -6,7 +6,7 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 13:04:00 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/20 12:50:33 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/20 16:18:45 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef struct			s_program
 	int			gridy;
 	int			unit;
 	int			h_amp;
+	int			resox;
+	int			resoy;
 }						t_program;
 
 int			diagonal_distance(int p0x, int p0y, int p1x, int p1y)
@@ -84,7 +86,7 @@ void			draw_line(t_program *p)
 			t = step / n;
 		ret0 = lerp_2d(p->start, p->end, t);
 		round_point(&ret0.x, &ret0.y);
-		mlx_pixel_put(p->mlx_ptr, p->win_ptr, ret0.x, ret0.y, p->color++);
+		mlx_pixel_put(p->mlx_ptr, p->win_ptr, ret0.x, ret0.y, p->color);
 		step++;
 	}
 }
@@ -99,13 +101,7 @@ int			mouse_callback(int button, int x, int y,  t_program *p)
 	return(0);
 }
 
-int			key_callback(int keycode, t_program *p)
-{
 
-	mlx_pixel_put(p->mlx_ptr, p->win_ptr, p->start.x++, p->start.y++, p->color++);
-	ft_putchar('\n');
-	return(0);
-}
 
 void			ft_putintarr(int *arr, int x)
 {
@@ -189,7 +185,7 @@ int		**init_grid()
 	return(grid);
 }
 
-void	draw_left(t_program *p, int i, int j, int x, int y)
+void	draw_left_isom(t_program *p, int i, int j, int x, int y)
 {
 		p->end.x = x;		/*This block draws horizontal*/
 		p->end.y = y - (p->grid[j][i] * p->h_amp);
@@ -199,7 +195,7 @@ void	draw_left(t_program *p, int i, int j, int x, int y)
 		p->start.y = p->end.y;
 }
 
-void	draw_up(t_program *p, int i, int j, int x, int y)
+void	draw_up_isom(t_program *p, int i, int j, int x, int y)
 {		
 		int		temp_startx;
 		int		temp_starty;
@@ -222,7 +218,7 @@ void	draw_up(t_program *p, int i, int j, int x, int y)
 		p->end.y = temp_endx;		
 }
 
-void	draw_grid(t_program *p)
+void	draw_isom(t_program *p)
 {
 	int		i;
 	int		j;
@@ -240,11 +236,11 @@ void	draw_grid(t_program *p)
 	{
 		while (i < p->gridx)
 		{
-			mlx_pixel_put(p->mlx_ptr, p->win_ptr, x, y, 0xFFFFFF);
+	//		mlx_pixel_put(p->mlx_ptr, p->win_ptr, x, y, 0xFFFFFF);
 			if(j > 0)	
-				draw_up(p, i, j, x, y);
+				draw_up_isom(p, i, j, x, y);
 	
-			draw_left(p, i, j, x, y);
+			draw_left_isom(p, i, j, x, y);
 			x = x + p->unit;
 			y = y + (p->unit / 2);
 			i++;
@@ -256,6 +252,103 @@ void	draw_grid(t_program *p)
 	}
 }
 
+void	draw_left_sec(t_program *p, int i, int j, int x, int y)
+{
+		p->end.x = x;		/*This block draws horizontal*/
+		p->end.y = y - (p->grid[j][i] * p->h_amp);
+		if(i > 0)
+			draw_line(p);
+		p->start.x = p->end.x;
+		p->start.y = p->end.y;
+}
+
+void	draw_up_sec(t_program *p, int i, int j, int x, int y)
+{
+		int		temp_startx;
+		int		temp_starty;
+		int		temp_endx;
+		int		temp_endy;
+
+		temp_startx = p->start.x;
+		temp_starty = p->start.y;
+		temp_endx = p->end.x;
+		temp_endy = p->end.y;
+
+		p->end.x = x;// + p->unit;
+		p->end.y = (y - (p->unit / 2)) - (p->grid[j - 1][i] * p->h_amp);
+		p->start.x = x;
+		p->start.y = y - (p->grid[j][i] * p->h_amp);
+		draw_line(p);
+		p->start.x = temp_startx;
+		p->start.y = temp_starty;
+		p->end.x = temp_endx;
+		p->end.y = temp_endx;
+}
+
+void	draw_sec(t_program *p)
+{
+	int		i;
+	int		j;
+	int		x;
+	int		y;
+	int		origin;
+
+	origin = 200;
+	x = origin;
+	y = origin - 150;
+	i = 0;
+	j = 0;
+
+	while(j < p->gridy)
+	{
+		while (i < p->gridx)
+		{
+	//		mlx_pixel_put(p->mlx_ptr, p->win_ptr, x, y, 0xFFFFFF);
+			if(j > 0)
+				draw_up_sec(p, i, j, x, y);
+			draw_left_sec(p, i, j, x, y);
+			x = x + p->unit;
+	//		y = y + (p->unit / 2);
+			i++;
+		}
+		y = (origin - 150) + ((j + 1) * (p->unit / 2));
+		x = origin; //	x = origin - ((j + 1) * p->unit);
+		i = 0;
+		j++;
+	}
+}
+
+void			erase_screen(t_program *p)
+{
+	mlx_clear_window(p->mlx_ptr, p->win_ptr);
+}
+
+int			key_callback(int keycode, t_program *p)
+{	
+	static int		i;
+
+	if(keycode == 49)
+	{
+		if(i % 2 == 0)
+		{	
+			erase_screen(p);
+			draw_sec(p);
+		}
+		else
+		{
+			erase_screen(p);
+			draw_isom(p);
+		}
+		i++;
+	}
+	if(keycode == 53)
+	{	
+		mlx_destroy_window(p->mlx_ptr, p->win_ptr);
+		exit(1);
+	}
+	return(0);
+}
+
 int		main(int argc, char **argv)
 {
 	t_program	program;
@@ -265,14 +358,17 @@ int		main(int argc, char **argv)
 	program.h_amp = program.unit / 6; //origial value is (unit / 6)
 	program.start.x = 250;
 	program.start.y = 300;
-	program.color = 0xffa500;	
+	program.color = 0xffa500;
+	program.resox = 1000;
+	program.resoy = 700;
 
 	read_file(argv[1], &program);
 
 	program.mlx_ptr = mlx_init();
-	program.win_ptr = mlx_new_window(program.mlx_ptr, 1000, 700, "Dope!");
+	program.win_ptr = mlx_new_window(program.mlx_ptr, program.resox, program.resoy, "Dope!");
 
-	draw_grid(&program);
+	draw_isom(&program);
+//	draw_sec(&program);
 	mlx_key_hook(program.win_ptr, key_callback, &program);
 	mlx_mouse_hook(program.win_ptr, mouse_callback, &program);
 	mlx_loop(program.mlx_ptr);
