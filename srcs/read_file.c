@@ -6,7 +6,7 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:22:11 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/20 20:09:47 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/21 12:57:32 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ int			*line_to_grid(char *line, int *grid, int *line_len)
 		else if (line[xy.i - 1] != ' ')
 		{
 			buf[xy.j] = '\0';
-			grid[xy.x++] = ft_atoi(buf);
+			grid[xy.x++] = ft_atoi1000(buf);
 			xy.j = 0;
 			ft_bzero(buf, 50);
 		}
 		xy.i++;
 	}
 	buf[xy.j] = '\0';
-	grid[xy.x++] = ft_atoi(buf);
+	grid[xy.x++] = ft_atoi1000(buf);
 	*line_len = xy.x;
 	return (NULL);
 }

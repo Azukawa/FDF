@@ -6,7 +6,7 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:19:18 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/20 19:35:13 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/21 14:17:58 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ typedef struct			s_program
 	int			h_amp;
 	int			resox;
 	int			resoy;
+	int			origin;
+	int			scale;
 }						t_program;
 
 void					draw_isom(t_program *p);

@@ -6,7 +6,7 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:24:20 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/20 19:34:54 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/21 14:49:07 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,8 @@ void	draw_sec(t_program *p)
 	t_point	xy;
 	int		origin;
 
-	origin = 200;
-	xy.x = origin;
-	xy.y = origin - 150;
+	xy.x = p->origin;
+	xy.y = p->origin - 450;
 	xy.i = 0;
 	xy.j = 0;
 	while (xy.j < p->gridy)
@@ -64,8 +63,8 @@ void	draw_sec(t_program *p)
 			xy.x = xy.x + p->unit;
 			xy.i++;
 		}
-		xy.y = (origin - 150) + ((xy.j + 1) * (p->unit / 2));
-		xy.x = origin;
+		xy.y = (p->origin - 450) + ((xy.j + 1) * (p->unit / 2));
+		xy.x = p->origin;
 		xy.i = 0;
 		xy.j++;
 	}

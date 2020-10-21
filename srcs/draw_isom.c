@@ -6,7 +6,7 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:23:36 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/20 19:30:26 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/21 14:49:16 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,9 @@ void	draw_up_isom(t_program *p, t_point xy)
 void	draw_isom(t_program *p)
 {
 	t_point xy;
-	int		origin;
 
-	origin = 200;
-	xy.x = origin;
-	xy.y = origin - 150;
+	xy.x = p->origin;
+	xy.y = p->origin - 450;
 	xy.i = 0;
 	xy.j = 0;
 	while (xy.j < p->gridy)
@@ -65,8 +63,8 @@ void	draw_isom(t_program *p)
 			xy.y = xy.y + (p->unit / 2);
 			xy.i++;
 		}
-		xy.y = (origin - 150) + ((xy.j + 1) * (p->unit / 2));
-		xy.x = origin - ((xy.j + 1) * p->unit);
+		xy.y = (p->origin - 450) + ((xy.j + 1) * (p->unit / 2));
+		xy.x = p->origin - ((xy.j + 1) * p->unit);
 		xy.i = 0;
 		xy.j++;
 	}
