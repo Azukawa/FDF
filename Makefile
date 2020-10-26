@@ -6,11 +6,11 @@
 #    By: esukava <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/21 17:29:30 by esukava           #+#    #+#              #
-#    Updated: 2020/10/21 17:41:54 by esukava          ###   ########.fr        #
+#    Updated: 2020/10/26 14:56:25 by esukava          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-LIBFT = _libft/libft.a
+LIBFT = libft/libft.a
 NAME = fdf
 SRCS = srcs/main.c \
 		srcs/read_file.c \
@@ -32,12 +32,12 @@ ifneq (,$(wildcard $(NAME).dSYM))
 	@rm -r $(DEBUG)
 	@echo "Deleted $(NAME).dSYM in $(NAME)"
 endif
-	@make -C _libft clean
+	@make -C libft clean
 	@rm -f $(OBJS)
 	@echo "Deleted all .o files!"
 
 fclean:
-	@make -C _libft fclean
+	@make -C libft fclean
 	@rm -f $(OBJS)
 	@rm -f $(NAME)
 	rm -rf
@@ -54,7 +54,7 @@ endif
 re: fclean all
 
 l:
-	@make -C _libft
+	@make -C libft
 d:
 	@gcc -g -Wall -Wextra -Werror $(SRCS) $(LIBFT)-lmlx -framework OpenGL \
 	-framework AppKit -o $(NAME)
@@ -62,7 +62,7 @@ d:
 	@echo "Compilation of $(NAME) successful!"
 
 $(NAME): $(OBJS)
-	@make -C _libft
+	@make -C libft
 	@gcc -Wall -Wextra -Werror $^ $(LIBFT) -lmlx -framework OpenGL \
 	-framework AppKit -o $(NAME)
 	@echo "Compilation of $(NAME) successful!"
