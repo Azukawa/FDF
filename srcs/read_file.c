@@ -6,7 +6,7 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:22:11 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/21 12:57:32 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/23 16:39:05 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,32 +24,33 @@ void		ft_putintarr(int *arr, int x)
 	}
 }
 
-int			*line_to_grid(char *line, int *grid, int *line_len)
+int			line_to_grid(char *line, int *grid, int *line_len)
 {
 	t_point xy;
-	char	buf[50];
-	int		ret[50];
+	char	buf[25];
 
 	xy.i = 0;
 	xy.j = 0;
 	xy.x = 0;
 	while (line[xy.i] != '\0')
 	{
-		if (line[xy.i] != ' ')
+		if (xy.j > 25)
+			return (0);
+		if (line[xy.i] != ' ' && xy.j <= 25)
 			buf[xy.j++] = line[xy.i];
 		else if (line[xy.i - 1] != ' ')
 		{
 			buf[xy.j] = '\0';
 			grid[xy.x++] = ft_atoi1000(buf);
 			xy.j = 0;
-			ft_bzero(buf, 50);
+			ft_bzero(buf, 25);
 		}
 		xy.i++;
 	}
 	buf[xy.j] = '\0';
 	grid[xy.x++] = ft_atoi1000(buf);
 	*line_len = xy.x;
-	return (NULL);
+	return (1);
 }
 
 int			read_file(char *str, t_program *p)
@@ -61,13 +62,18 @@ int			read_file(char *str, t_program *p)
 
 	i = 0;
 	output = NULL;
-	fd = open(str, O_RDONLY);
+	if ((fd = open(str, O_RDONLY)) == -1)
+		return (0);
 	while ((ret = get_next_line(fd, &output)) > 0)
 	{
-		line_to_grid(output, p->grid[i], &p->gridx);
+		if (line_to_grid(output, p->grid[i], &p->gridx) == 0)
+		{
+			free(output);
+			return (0);
+		}
 		free(output);
 		i++;
 	}
 	p->gridy = i;
-	return (0);
+	return (1);
 }
