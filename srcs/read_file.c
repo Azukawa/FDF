@@ -6,7 +6,7 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:22:11 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/29 11:43:26 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/30 18:30:05 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,7 @@ int			read_file(char *str, t_program *p)
 		i++;
 	}
 	p->gridy = i;
+	if (p->gridy <= 2 || p->gridy <= 2)
+		return (0);
 	return (1);
 }
