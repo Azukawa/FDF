@@ -6,7 +6,7 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:22:54 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/22 15:10:45 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/30 12:30:01 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		**init_grid(void)
 
 	i = 0;
 	grid = (int**)malloc(sizeof(int*) * 100000);
-	while (i < 1000)
+	while (i < 100000)
 		grid[i++] = (int*)malloc(sizeof(int) * 100000);
 	return (grid);
 }

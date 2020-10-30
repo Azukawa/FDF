@@ -6,7 +6,7 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:25:55 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/23 16:57:07 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/30 12:37:49 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 #include "fdf.h"
 
-void		ft_error(char *str)
+void	ft_error(char *str)
 {
 	ft_putstr("ERROR: ");
 	ft_putstr(str);
@@ -28,11 +28,13 @@ void		ft_error(char *str)
 
 int		check_filetype(char *str)
 {
-	int		i;
+	int			i;
 
 	i = 0;
 	i = ft_strlen(str);
 	i = i - 4;
+	if (i < 0)
+		return (0);
 	if (!ft_strcmp(&str[i], ".txt") || !ft_strcmp(&str[i], ".fdf"))
 		return (1);
 	return (0);
@@ -48,8 +50,8 @@ int		main(int argc, char **argv)
 		ft_error("Wrong filetype. Only .txt and .fdf accepted.");
 	p.grid = init_grid();
 	p.unit = 30;
-	p.scale = 1;
-	p.h_amp = (p.unit / 6) + p.scale;
+	p.scale = 0;
+	p.h_amp = ((p.unit + p.scale) / 6);
 	p.start.x = 250;
 	p.start.y = 300;
 	p.color = 0xffa500;

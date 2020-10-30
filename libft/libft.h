@@ -6,7 +6,7 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 13:48:09 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/21 12:42:57 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/28 16:44:49 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void		ft_putstr_fd(char const *s, int fd);
 void		ft_putendl_fd(char const *s, int fd);
 void		ft_putnbr_fd(int n, int fd);
 
+int			ft_iswhite(char c);
 int			ft_len(int n);
 int			ft_countwords(const char *s1, char c);
 char		*ft_strctrim(char const *s, char c);

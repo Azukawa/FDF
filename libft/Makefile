@@ -6,7 +6,7 @@
 #    By: esukava <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/10 12:13:28 by esukava           #+#    #+#              #
-#    Updated: 2020/10/21 12:56:39 by esukava          ###   ########.fr        #
+#    Updated: 2020/10/28 16:44:25 by esukava          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = libft.a
 SRCS = ft_atoi.c ft_strlen.c ft_strcmp.c ft_strncmp.c ft_toupper.c \
 	ft_tolower.c ft_isprint.c ft_isascii.c ft_isdigit.c \
 	ft_isalpha.c ft_strstr.c ft_strnstr.c ft_bzero.c ft_memset.c \
-	ft_isalnum.c ft_atoi1000.c \
+	ft_isalnum.c ft_atoi1000.c ft_iswhite.c \
 	ft_memcpy.c ft_memccpy.c ft_memmove.c ft_memcmp.c ft_memchr.c \
 	ft_strdup.c ft_strcpy.c ft_strncpy.c ft_strcat.c ft_strncat.c \
 	ft_strlcat.c ft_strchr.c ft_strrchr.c \
