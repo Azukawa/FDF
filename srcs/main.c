@@ -6,7 +6,7 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:25:55 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/30 12:37:49 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/30 18:07:13 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int		main(int argc, char **argv)
 	if (check_filetype(argv[1]) == 0)
 		ft_error("Wrong filetype. Only .txt and .fdf accepted.");
 	p.grid = init_grid();
+	p.keyi = 0;
 	p.unit = 30;
 	p.scale = 0;
 	p.h_amp = ((p.unit + p.scale) / 6);
