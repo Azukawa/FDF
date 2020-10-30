@@ -6,18 +6,17 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:19:18 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/21 14:17:58 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/30 17:24:29 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# include "mlx.h"
+# include "../minilibx/mlx.h"
 # include "../libft/libft.h"
 # include <math.h>
 # include <unistd.h>
-# include <stdio.h>
 # include <fcntl.h>
 
 typedef	struct			s_point
