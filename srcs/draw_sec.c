@@ -6,7 +6,7 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:24:20 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/21 17:36:03 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/31 10:42:45 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	draw_up_sec(t_program *p, t_point xy)
 	p->start.x = temp_startx;
 	p->start.y = temp_starty;
 	p->end.x = temp_endx;
-	p->end.y = temp_endx;
+	p->end.y = temp_endy;
 }
 
 void	draw_sec(t_program *p)

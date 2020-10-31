@@ -6,7 +6,7 @@
 /*   By: esukava <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/20 17:23:36 by esukava           #+#    #+#             */
-/*   Updated: 2020/10/22 14:46:37 by esukava          ###   ########.fr       */
+/*   Updated: 2020/10/31 10:42:24 by esukava          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	draw_up_isom(t_program *p, t_point xy)
 	p->start.x = temp_startx;
 	p->start.y = temp_starty;
 	p->end.x = temp_endx;
-	p->end.y = temp_endx;
+	p->end.y = temp_endy;
 }
 
 void	draw_isom(t_program *p)
